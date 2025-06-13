@@ -1,9 +1,24 @@
-import { formatTime } from "@/util/timeUtil";
+import HomeScreenButton from "@/components/HomeScreenButton";
+import { formatGreeting, formatTime } from "@/util/timeUtil";
+import { useRouter } from "expo-router";
 import { useEffect, useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
+import StepTracker from "../../components/StepTracker";
 
 export default function Index() {
-  const [currTime, setCurrTime] = useState(formatTime(new Date()));
+  const curr = new Date();
+  const [currTime, setCurrTime] = useState(formatTime(curr));
+  const [greeting, setGreeting] = useState(formatGreeting(curr))
+
+  const router = useRouter();
+
+  const onRoutinesPress = () => {
+    router.navigate("/(tabs)/routines")
+  }
+
+  const onTasksPress = () => {
+    router.navigate("/(tabs)/tasks")
+  }
 
   useEffect(() => {
     let timer = setInterval(() => {
@@ -11,14 +26,25 @@ export default function Index() {
     }, 1000);
 
     return () => clearInterval(timer)
-  }, [])
+  }, []);
+
+  useEffect(() => {
+    let timer = setInterval(() => {
+      setGreeting(formatGreeting(new Date()));
+    }, 60000);
+
+    return () => clearInterval(timer)
+  }, []);
 
   return (
     <View
       style={styles.container}
     >
-      <Text style={styles.titleText}>{currTime}</Text>
-      <Text style={styles.basicText}>Let&apos;s get to work!</Text>
+      <Text style={styles.titleText}>{greeting}</Text>
+      <Text style={styles.timeText}>{currTime} Let&apos;s get to work!</Text>
+      <StepTracker />
+      <HomeScreenButton label="Today's Routines" onPress={onRoutinesPress} />
+      <HomeScreenButton label="Do a Task" onPress={onTasksPress} />
     </View>
   );
 }
@@ -31,16 +57,17 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   titleText: {
-    fontSize: 30,
+    fontSize: 35,
     color: '#fff',
-    paddingBottom: 20
+    padding: 20,
+    paddingTop: 0
+  },
+  timeText: {
+    fontSize: 18,
+    padding: 10,
+    color: "#fff"
   },
   basicText: {
     color: '#fff'
-  },
-  button: {
-    fontSize: 20,
-    textDecorationLine: 'underline',
-    color: '#fff',
-  },
+  }
 })
