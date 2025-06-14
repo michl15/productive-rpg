@@ -11,7 +11,7 @@ const formatGreeting = (date: Date) => {
     let greeting = "Good morning!";
     const hrs = date.getHours();
 
-    if (hrs >= 18) {
+    if (hrs >= 18 || hrs <= 4) {
         greeting = "Good evening!"
     } else if (hrs >= 12) {
         greeting = "Good afternoon!"

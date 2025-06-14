@@ -11,6 +11,7 @@ export default function TabLayout() {
                 },
                 headerShown: false
             }}
+            initialRouteName='index'
         >
             <Tabs.Screen name="index" options={{
                 title: 'Home', tabBarIcon: ({ color, focused }) => (
@@ -27,7 +28,7 @@ export default function TabLayout() {
                     <Ionicons name={focused ? 'game-controller' : 'game-controller-outline'} color={color} size={24} />
                 ),
             }} />
-            <Tabs.Screen name="tasks" options={{
+            <Tabs.Screen name="(tasks)" options={{
                 title: 'Tasks', tabBarIcon: ({ color, focused }) => (
                     <Ionicons name={focused ? 'checkbox' : 'checkbox-outline'} color={color} size={24} />
                 ),

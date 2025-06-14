@@ -1,3 +1,4 @@
+import { BACKGROUND_GRAY } from '@/constants/colors';
 import { Link, Stack } from 'expo-router';
 import { StyleSheet, Text, View } from 'react-native';
 
@@ -18,7 +19,7 @@ export default function NotFoundScreen() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#25292e',
+        backgroundColor: BACKGROUND_GRAY,
         justifyContent: 'center',
         alignItems: 'center',
     },
