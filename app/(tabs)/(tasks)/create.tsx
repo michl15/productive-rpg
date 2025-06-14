@@ -1,6 +1,7 @@
 import Button from "@/components/Button";
 import PriorityPicker from "@/components/PriorityPicker";
 import { BACKGROUND_GRAY, LIGHT_BLUE, RED } from "@/constants/colors";
+import { Task } from "@/constants/types";
 import { addTask } from "@/redux/tasksReducer";
 import { randomId } from "@/util/tasksUtil";
 import { useRouter } from "expo-router";
@@ -8,9 +9,13 @@ import { useState } from "react";
 import { StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 import { useDispatch } from "react-redux";
 
-export default function Create() {
-    const [taskName, setTaskName] = useState("");
-    const [priority, setPriority] = useState(1);
+type Props = {
+    task?: Task
+}
+
+export default function Create({ task }: Props) {
+    const [taskName, setTaskName] = useState(task?.name || "");
+    const [priority, setPriority] = useState(task?.priority !== undefined ? task.priority : 1);
     const [validInput, setValidInput] = useState(true);
 
     const dispatch = useDispatch();
@@ -35,11 +40,15 @@ export default function Create() {
             const newTask = {
                 name: taskName,
                 priority: priority,
-                id: randomId()
+                id: task?.id || randomId()
             }
             dispatch(addTask(newTask));
             router.push("..")
         }
+    }
+
+    const addButtonContent = () => {
+        return task ? "Update" : "Add Task"
     }
 
     return (
@@ -83,7 +92,7 @@ export default function Create() {
 
             <View style={styles.buttonsContainer}>
                 <Button label="Cancel" onPress={onCancel} />
-                <Button label="Add Task" onPress={onSubmit} />
+                <Button label={addButtonContent()} onPress={onSubmit} />
             </View>
         </View>
     );
