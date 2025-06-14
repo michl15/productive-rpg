@@ -1,5 +1,6 @@
 import { GREEN, LIGHT_BLUE, RED, YELLOW } from "@/constants/colors";
 import { Task } from "@/constants/types";
+import { useRouter } from "expo-router";
 import { useState } from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import CheckBox from "./CheckBox";
@@ -10,6 +11,8 @@ type Props = {
 
 export default function TaskCard({ task }: Props) {
     const [taskDone, setTaskDone] = useState(false);
+
+    const router = useRouter();
 
     const badgeColor = () => {
         if (task.priority === 0) {
@@ -31,9 +34,13 @@ export default function TaskCard({ task }: Props) {
         }
     }
 
+    const onLongPress = () => {
+        router.push(`/(tabs)/(tasks)/edit/${task.id}`)
+    }
+
     return (
         <View style={styles.taskCardContainer}>
-            <Pressable onPress={() => { setTaskDone(!taskDone) }} style={styles.taskCardContent}>
+            <Pressable onPress={() => { setTaskDone(!taskDone) }} style={styles.taskCardContent} onLongPress={onLongPress}>
                 <CheckBox value={taskDone} onCheck={() => { setTaskDone(true) }} />
                 <Text style={styles.taskCardText}>{task.name}</Text>
                 <Text style={{

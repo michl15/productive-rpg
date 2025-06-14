@@ -1,4 +1,5 @@
 import { Task } from '@/constants/types';
+import { getTaskIndexById } from '@/util/tasksUtil';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { createSlice } from '@reduxjs/toolkit';
 
@@ -20,7 +21,12 @@ export const taskSlice = createSlice({
             state.taskList = [];
         },
         addTask: (state, action: PayloadAction<Task>) => {
-            state.taskList.push(action.payload);
+            const findIndex = getTaskIndexById(action.payload.id, state.taskList);
+            if (findIndex < 0) {
+                state.taskList.push(action.payload);
+            } else {
+                state.taskList[findIndex] = action.payload;
+            }
             state.taskList.sort((a, b) => b.priority - a.priority)
         },
         removeTask: (state, action: PayloadAction<string>) => {
