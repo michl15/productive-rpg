@@ -1,16 +1,19 @@
 import Button from "@/components/Button";
 import PriorityPicker from "@/components/PriorityPicker";
 import { BACKGROUND_GRAY, LIGHT_BLUE, RED } from "@/constants/colors";
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import { addTask } from "@/redux/tasksReducer";
+import { randomId } from "@/util/tasksUtil";
 import { useRouter } from "expo-router";
 import { useState } from "react";
 import { StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
+import { useDispatch } from "react-redux";
 
 export default function Create() {
     const [taskName, setTaskName] = useState("");
     const [priority, setPriority] = useState(1);
     const [validInput, setValidInput] = useState(true);
 
+    const dispatch = useDispatch();
     const router = useRouter();
 
     const priorities = ["Low", "Medium", "High"];
@@ -22,33 +25,20 @@ export default function Create() {
 
     const onCancel = () => {
         resetState();
-        router.push("/(tabs)/(tasks)");
+        router.push("..");
     }
 
     const onSubmit = async () => {
         if (!taskName) {
             setValidInput(false);
         } else {
-            try {
-                const taskList = await AsyncStorage.getItem("tasks");
-                let tasks = []
-                if (taskList) {
-                    tasks = JSON.parse(taskList);
-                }
-
-                const newTask = {
-                    name: taskName,
-                    priority: priority
-                }
-                tasks.push(newTask);
-                console.log(tasks);
-                await AsyncStorage.setItem("tasks", JSON.stringify(tasks));
-
-                resetState();
-                router.push("/(tabs)/(tasks)")
-            } catch (e) {
-                console.error(e)
+            const newTask = {
+                name: taskName,
+                priority: priority,
+                id: randomId()
             }
+            dispatch(addTask(newTask));
+            router.push("..")
         }
     }
 

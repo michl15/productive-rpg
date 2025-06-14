@@ -1,0 +1,39 @@
+import { Task } from '@/constants/types';
+import type { PayloadAction } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
+
+// Define a type for the slice state
+interface TasksState {
+    taskList: Task[],
+}
+
+// Define the initial state using that type
+const initialState: TasksState = {
+    taskList: [],
+}
+
+export const taskSlice = createSlice({
+    name: 'tasks',
+    initialState,
+    reducers: {
+        resetTasks: (state) => {
+            state.taskList = [];
+        },
+        addTask: (state, action: PayloadAction<Task>) => {
+            state.taskList.push(action.payload);
+            state.taskList.sort((a, b) => b.priority - a.priority)
+        },
+        removeTask: (state, action: PayloadAction<string>) => {
+            state.taskList = state.taskList.filter((task) => task.id !== action.payload);
+            state.taskList.sort((a, b) => b.priority - a.priority)
+        },
+        setTasks: (state, action: PayloadAction<Task[]>) => {
+            state.taskList = action.payload;
+            state.taskList.sort((a, b) => b.priority - a.priority)
+        }
+    },
+})
+
+export const { resetTasks, addTask, removeTask, setTasks } = taskSlice.actions;
+
+export default taskSlice.reducer;

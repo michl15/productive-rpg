@@ -9,7 +9,7 @@ type Props = {
 export default function CheckBox({ onCheck, value }: Props) {
     return (
         <View style={styles.box}>
-            <Pressable onPress={() => { onCheck(); console.log("checked") }}>
+            <Pressable onPress={() => { onCheck() }}>
                 {value && <Ionicons name="checkmark" color="#fff" size={15} />}
             </Pressable>
         </View>

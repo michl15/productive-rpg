@@ -1,35 +1,30 @@
 import Button from "@/components/Button";
 import TaskCard from "@/components/TaskCard";
 import { BACKGROUND_GRAY } from "@/constants/colors";
-import { Task } from "@/constants/types";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import { RootState } from "@/redux/store";
+import Ionicons from "@expo/vector-icons/Ionicons";
 import { useRouter } from "expo-router";
-import { StyleSheet, Text, View } from "react-native";
+import { FlatList, StyleSheet, Text, View } from "react-native";
+import { useSelector } from "react-redux";
 
 export default function Tasks() {
     const router = useRouter()
+    const { taskList } = useSelector((state: RootState) => state.tasksReducer)
+
     const onCreateClick = () => {
-        console.log("create task")
-        router.push("/create")
+        router.push("/(tabs)/(tasks)/create")
     }
 
-    const getTaskList = async () => {
-        let tasks: Task[] = []
-        const taskList = await AsyncStorage.getItem("tasks");
-        if (taskList) {
-            tasks = JSON.parse(taskList)
-        }
-        tasks.sort((a, b) => b.priority - a.priority);
+    const onCompletedClick = () => { }
 
+    const getTaskList = async () => {
         return (
-            <View style={styles.taskListContainer}>
-                {tasks.map((task, index: number) => {
-                    return (
-                        <TaskCard key={`${task}-${index}`} task={task}>
-                        </TaskCard>
-                    )
-                })}
-            </View>
+            <FlatList style={styles.taskListContainer}
+                data={taskList}
+                renderItem={({ item }) => <TaskCard task={item} />}
+                keyExtractor={item => item.id}
+                fadingEdgeLength={100}
+            />
         )
     }
 
@@ -38,8 +33,9 @@ export default function Tasks() {
             style={styles.container}
         >
             <Text style={styles.titleText}>Tasks</Text>
+            <Button label="New Task" onPress={onCreateClick} Icon={Ionicons} iconName={"add-circle-outline"} />
             {getTaskList()}
-            <Button label="Create a new task" onPress={onCreateClick} />
+            <Button label="Completed" onPress={onCompletedClick} Icon={Ionicons} iconName={"checkmark-circle-outline"} />
         </View>
     );
 }
@@ -52,19 +48,17 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     titleText: {
+        paddingTop: 70,
         fontSize: 30,
         color: '#fff',
         paddingBottom: 20
     },
-    basicText: {
-        color: '#fff'
-    },
-    button: {
-        fontSize: 20,
-        textDecorationLine: 'underline',
-        color: '#fff',
-    },
     taskListContainer: {
-        width: "90%"
+        width: "100%"
+    },
+    buttonContainer: {
+        width: "100%",
+        flexDirection: "row",
+        justifyContent: "space-between"
     }
 })

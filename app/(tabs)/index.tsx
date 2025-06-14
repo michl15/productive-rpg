@@ -42,7 +42,7 @@ export default function Index() {
       style={styles.container}
     >
       <Text style={styles.titleText}>{greeting}</Text>
-      <Text style={styles.timeText}>{currTime} Let&apos;s get to work!</Text>
+      <Text style={styles.timeText}>{currTime} Let&apos;s get going!</Text>
       <StepTracker />
       <HomeScreenButton label="Today's Routines" onPress={onRoutinesPress} />
       <HomeScreenButton label="Do a Task" onPress={onTasksPress} />
