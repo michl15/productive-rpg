@@ -1,3 +1,4 @@
+import { BACKGROUND_GRAY } from "@/constants/colors";
 import { StyleSheet, Text, View } from "react-native";
 
 export default function Profile() {
@@ -13,7 +14,7 @@ export default function Profile() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#25292e',
+        backgroundColor: BACKGROUND_GRAY,
         justifyContent: 'center',
         alignItems: 'center',
     },

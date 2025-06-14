@@ -37,7 +37,7 @@ export default function StepTracker() {
                 </Text>
             </View>
         </View> : <View>
-            <Text>
+            <Text style={styles.basicText}>
                 To see your steps, please go to {"Settings > Apps > [APPNAME]"} and enable &quot;Motion & Fitness&quot;
             </Text>
         </View>

@@ -1,9 +1,10 @@
 import HomeScreenButton from "@/components/HomeScreenButton";
+import StepTracker from "@/components/StepTracker";
+import { BACKGROUND_GRAY } from "@/constants/colors";
 import { formatGreeting, formatTime } from "@/util/timeUtil";
 import { useRouter } from "expo-router";
 import { useEffect, useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
-import StepTracker from "../../components/StepTracker";
 
 export default function Index() {
   const curr = new Date();
@@ -13,11 +14,11 @@ export default function Index() {
   const router = useRouter();
 
   const onRoutinesPress = () => {
-    router.navigate("/(tabs)/routines")
+    router.push("/(tabs)/routines")
   }
 
   const onTasksPress = () => {
-    router.navigate("/(tabs)/tasks")
+    router.push("/(tabs)/(tasks)")
   }
 
   useEffect(() => {
@@ -52,7 +53,7 @@ export default function Index() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#25292e',
+    backgroundColor: BACKGROUND_GRAY,
     justifyContent: 'center',
     alignItems: 'center',
   },
