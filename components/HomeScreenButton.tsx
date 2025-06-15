@@ -12,7 +12,7 @@ export default function HomeScreenButton({ label, onPress }: Props) {
         <View style={styles.buttonContainer}>
             <Pressable onPress={onPress} style={styles.button}>
                 <Text style={styles.buttonText}>{label}</Text>
-                <Ionicons name="chevron-forward-circle-outline" size={24} color="#70cbff" style={styles.buttonIcon} />
+                <Ionicons name="chevron-forward-circle-outline" size={24} color={LIGHT_BLUE} style={styles.buttonIcon} />
             </Pressable>
         </View>
     )

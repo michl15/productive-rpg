@@ -1,3 +1,4 @@
+import { DARK_BLUE, LIGHT_BLUE } from '@/constants/colors';
 import { Pedometer } from 'expo-sensors';
 import { useEffect, useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
@@ -17,7 +18,6 @@ export default function StepTracker() {
 
             const pastStepCountResult = await Pedometer.getStepCountAsync(start, end);
             if (pastStepCountResult) {
-                console.log(pastStepCountResult)
                 setPastStepCount(pastStepCountResult.steps);
             }
         }
@@ -38,7 +38,7 @@ export default function StepTracker() {
             </View>
         </View> : <View>
             <Text style={styles.basicText}>
-                To see your steps, please go to {"Settings > Apps > [APPNAME]"} and enable &quot;Motion & Fitness&quot;
+                To see your steps, please go to {"Settings > Apps > Productive RPG"} and enable &quot;Motion & Fitness&quot;
             </Text>
         </View>
     );
@@ -49,7 +49,7 @@ const styles = StyleSheet.create({
         marginVertical: 15,
         alignItems: 'center',
         justifyContent: 'center',
-        borderColor: "#70cbff",
+        borderColor: LIGHT_BLUE,
         borderWidth: 5,
         borderRadius: "100%",
         width: 250,
@@ -60,7 +60,7 @@ const styles = StyleSheet.create({
         borderRadius: "100%",
         width: 200,
         height: 200,
-        backgroundColor: "#213d4d",
+        backgroundColor: DARK_BLUE,
         alignItems: 'center',
         justifyContent: 'center',
     },

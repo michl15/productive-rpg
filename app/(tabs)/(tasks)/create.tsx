@@ -4,8 +4,8 @@ import { BACKGROUND_GRAY, LIGHT_BLUE, RED } from "@/constants/colors";
 import { Task } from "@/constants/types";
 import { addTask } from "@/redux/tasksReducer";
 import { randomId } from "@/util/tasksUtil";
-import { useRouter } from "expo-router";
-import { useState } from "react";
+import { useFocusEffect, useRouter } from "expo-router";
+import { useCallback, useRef, useState } from "react";
 import { StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 import { useDispatch } from "react-redux";
 
@@ -18,19 +18,14 @@ export default function Create({ task }: Props) {
     const [priority, setPriority] = useState(task?.priority !== undefined ? task.priority : 1);
     const [validInput, setValidInput] = useState(true);
 
+    const nameRef = useRef<TextInput>(null);
     const dispatch = useDispatch();
     const router = useRouter();
 
     const priorities = ["Low", "Medium", "High"];
 
-    const resetState = () => {
-        setTaskName("");
-        setPriority(1);
-    }
-
     const onCancel = () => {
-        resetState();
-        router.push("..");
+        router.replace("/(tabs)/(tasks)");
     }
 
     const onSubmit = async () => {
@@ -40,10 +35,11 @@ export default function Create({ task }: Props) {
             const newTask = {
                 name: taskName,
                 priority: priority,
-                id: task?.id || randomId()
+                id: task?.id || randomId(),
+                selected: false,
             }
             dispatch(addTask(newTask));
-            router.push("..")
+            router.replace("/(tabs)/(tasks)");
         }
     }
 
@@ -51,13 +47,21 @@ export default function Create({ task }: Props) {
         return task ? "Update" : "Add Task"
     }
 
+    useFocusEffect(
+        useCallback(() => {
+            if (nameRef.current) {
+                nameRef.current.focus();
+            }
+        }, [])
+    )
+
     return (
         <View
             style={styles.container}
         >
             <Text style={styles.titleText}>Create a task</Text>
             <TouchableOpacity style={styles.labelContainer}>
-                <Text style={styles.labelText}>Name*</Text>
+                <Text style={styles.labelText}>Name</Text>
             </TouchableOpacity>
             <TextInput
                 value={taskName}
@@ -67,15 +71,16 @@ export default function Create({ task }: Props) {
                 }}
                 style={{
                     ...styles.input,
-                    borderColor: validInput ? "#70cbff" : "#fb2c36"
+                    borderColor: validInput ? LIGHT_BLUE : RED
                 }}
                 placeholder="Enter a name for your task"
                 maxLength={30}
+                ref={nameRef}
             />
             {!validInput && <Text style={styles.invalidText}>Please enter a name for your task</Text>}
 
             <TouchableOpacity style={styles.labelContainer}>
-                <Text style={styles.labelText}>Priority*</Text>
+                <Text style={styles.labelText}>Priority</Text>
             </TouchableOpacity>
             <PriorityPicker
                 labels={priorities}
@@ -118,7 +123,8 @@ const styles = StyleSheet.create({
     },
     labelText: {
         color: '#fff',
-        marginRight: "auto"
+        marginRight: "auto",
+        fontSize: 16
     },
     input: {
         width: "90%",
