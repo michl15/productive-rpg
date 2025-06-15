@@ -1,7 +1,9 @@
+import Button from "@/components/Button";
 import HomeScreenButton from "@/components/HomeScreenButton";
 import StepTracker from "@/components/StepTracker";
 import { BACKGROUND_GRAY } from "@/constants/colors";
 import { formatGreeting, formatTime } from "@/util/timeUtil";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useRouter } from "expo-router";
 import { useEffect, useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
@@ -19,6 +21,10 @@ export default function Index() {
 
   const onTasksPress = () => {
     router.push("/(tabs)/(tasks)")
+  }
+
+  const onClearPress = () => {
+    AsyncStorage.clear();
   }
 
   useEffect(() => {
@@ -46,6 +52,7 @@ export default function Index() {
       <StepTracker />
       <HomeScreenButton label="Today's Routines" onPress={onRoutinesPress} />
       <HomeScreenButton label="Do a Task" onPress={onTasksPress} />
+      <Button label="(DEV ONLY) Clear storage" onPress={onClearPress} size="small" variant="error" />
     </View>
   );
 }

@@ -2,26 +2,50 @@ import Button from "@/components/Button";
 import TaskCard from "@/components/TaskCard";
 import { BACKGROUND_GRAY } from "@/constants/colors";
 import { RootState } from "@/redux/store";
+import { completeTasks } from "@/redux/tasksReducer";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { useRouter } from "expo-router";
+import { useState } from "react";
 import { FlatList, StyleSheet, Text, View } from "react-native";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 export default function Tasks() {
-    const router = useRouter()
-    const { taskList } = useSelector((state: RootState) => state.tasksReducer)
+    const router = useRouter();
+    const dispatch = useDispatch();
+    const { taskList } = useSelector((state: RootState) => state.tasksReducer);
+
+    const [checkedTasks, setCheckedTasks] = useState<number[]>([]);
 
     const onCreateClick = () => {
-        router.push("/(tabs)/(tasks)/create")
+        router.replace("/(tabs)/(tasks)/create")
     }
 
-    const onCompletedClick = () => { }
+    const onCompletedClick = () => {
+        router.push("/(tabs)/(tasks)/completed")
+    }
 
-    const getTaskList = async () => {
+    const onSetCompleted = () => {
+        dispatch(completeTasks(checkedTasks));
+        setCheckedTasks([]);
+    }
+
+    const onCheckTask = (index: number) => {
+        setCheckedTasks([...checkedTasks, index]);
+    }
+
+    const onUncheckTask = (index: number) => {
+        setCheckedTasks(checkedTasks.filter((val) => val !== index));
+    }
+    const getTaskList = () => {
         return (
             <FlatList style={styles.taskListContainer}
                 data={taskList}
-                renderItem={({ item }) => <TaskCard task={item} />}
+                renderItem={({ item, index }) =>
+                    <TaskCard
+                        task={item}
+                        index={index}
+                        onCheckTask={onCheckTask}
+                        onUncheckTask={onUncheckTask} />}
                 keyExtractor={item => item.id}
                 fadingEdgeLength={100}
             />
@@ -33,9 +57,26 @@ export default function Tasks() {
             style={styles.container}
         >
             <Text style={styles.titleText}>Tasks</Text>
-            <Button label="New Task" onPress={onCreateClick} Icon={Ionicons} iconName={"add-circle-outline"} />
+            <View style={styles.buttonContainer}>
+                <Button
+                    label="New Task"
+                    onPress={onCreateClick}
+                    Icon={Ionicons}
+                    iconName={"add-circle-outline"} />
+                <Button
+                    label="Completed"
+                    onPress={onCompletedClick}
+                    Icon={Ionicons}
+                    iconName={"checkmark-done-circle-outline"}
+                    variant="success" />
+            </View>
             {getTaskList()}
-            <Button label="Completed" onPress={onCompletedClick} Icon={Ionicons} iconName={"checkmark-circle-outline"} />
+            {checkedTasks.length > 0 && <Button
+                label="Mark completed"
+                size="small"
+                Icon={Ionicons}
+                iconName="checkmark-circle"
+                onPress={onSetCompleted} />}
         </View>
     );
 }
@@ -59,6 +100,6 @@ const styles = StyleSheet.create({
     buttonContainer: {
         width: "100%",
         flexDirection: "row",
-        justifyContent: "space-between"
+        justifyContent: "center"
     }
 })

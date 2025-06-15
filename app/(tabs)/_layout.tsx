@@ -1,3 +1,4 @@
+import { BACKGROUND_GRAY, LIGHT_BLUE } from '@/constants/colors';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { Tabs } from 'expo-router';
 
@@ -5,9 +6,9 @@ export default function TabLayout() {
     return (
         <Tabs
             screenOptions={{
-                tabBarActiveTintColor: '#70cbff',
+                tabBarActiveTintColor: LIGHT_BLUE,
                 tabBarStyle: {
-                    backgroundColor: '#25292e',
+                    backgroundColor: BACKGROUND_GRAY,
                 },
                 headerShown: false
             }}

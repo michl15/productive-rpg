@@ -6,11 +6,13 @@ import { createSlice } from '@reduxjs/toolkit';
 // Define a type for the slice state
 interface TasksState {
     taskList: Task[],
+    completed: Task[],
 }
 
 // Define the initial state using that type
 const initialState: TasksState = {
     taskList: [],
+    completed: [],
 }
 
 export const taskSlice = createSlice({
@@ -36,10 +38,23 @@ export const taskSlice = createSlice({
         setTasks: (state, action: PayloadAction<Task[]>) => {
             state.taskList = action.payload;
             state.taskList.sort((a, b) => b.priority - a.priority)
+        },
+        completeTasks: (state, action: PayloadAction<number[]>) => {
+            const deleteList = action.payload;
+            deleteList.sort((a, b) => b - a);
+            for (let i = 0; i < deleteList.length; i++) {
+                const ind = deleteList[i]
+                if (state.completed) {
+                    state.completed.push(state.taskList[ind]);
+                } else {
+                    state.completed = [state.taskList[ind]];
+                }
+                state.taskList.splice(ind, 1);
+            }
         }
     },
 })
 
-export const { resetTasks, addTask, removeTask, setTasks } = taskSlice.actions;
+export const { resetTasks, addTask, removeTask, setTasks, completeTasks } = taskSlice.actions;
 
 export default taskSlice.reducer;

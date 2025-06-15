@@ -1,4 +1,4 @@
-import { GREEN, LIGHT_BLUE, RED, YELLOW } from "@/constants/colors";
+import { DARKER_BLUE, GREEN, LIGHT_BLUE, RED, YELLOW } from "@/constants/colors";
 import { Task } from "@/constants/types";
 import { useRouter } from "expo-router";
 import { useState } from "react";
@@ -6,10 +6,13 @@ import { Pressable, StyleSheet, Text, View } from "react-native";
 import CheckBox from "./CheckBox";
 
 type Props = {
-    task: Task
+    task: Task;
+    onCheckTask: (index: number) => void;
+    onUncheckTask: (index: number) => void;
+    index: number;
 }
 
-export default function TaskCard({ task }: Props) {
+export default function TaskCard({ task, onCheckTask, onUncheckTask, index }: Props) {
     const [taskDone, setTaskDone] = useState(false);
 
     const router = useRouter();
@@ -35,12 +38,21 @@ export default function TaskCard({ task }: Props) {
     }
 
     const onLongPress = () => {
-        router.push(`/(tabs)/(tasks)/edit/${task.id}`)
+        router.replace(`/(tabs)/(tasks)/edit/${task.id}`)
+    }
+
+    const onPress = () => {
+        setTaskDone(!taskDone);
+        if (!taskDone) {
+            onCheckTask(index);
+        } else {
+            onUncheckTask(index);
+        }
     }
 
     return (
         <View style={styles.taskCardContainer}>
-            <Pressable onPress={() => { setTaskDone(!taskDone) }} style={styles.taskCardContent} onLongPress={onLongPress}>
+            <Pressable onPress={onPress} style={styles.taskCardContent} onLongPress={onLongPress}>
                 <CheckBox value={taskDone} onCheck={() => { setTaskDone(true) }} />
                 <Text style={styles.taskCardText}>{task.name}</Text>
                 <Text style={{
@@ -59,6 +71,7 @@ const styles = StyleSheet.create({
         borderColor: LIGHT_BLUE,
         margin: 5,
         borderRadius: 10,
+        backgroundColor: DARKER_BLUE
     },
     taskCardText: {
         marginLeft: 10,
@@ -73,6 +86,7 @@ const styles = StyleSheet.create({
         marginLeft: "auto",
         fontSize: 14,
         borderRadius: 10,
-        padding: 5
+        padding: 5,
+        fontWeight: 700
     }
 })
