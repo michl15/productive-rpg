@@ -37,6 +37,7 @@ export default function Completed() {
                 onPress={onBack}
                 Icon={Ionicons}
                 iconName="chevron-back-circle-outline"
+                variant="secondary"
             />
         </View>
     );

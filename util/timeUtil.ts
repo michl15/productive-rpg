@@ -19,5 +19,10 @@ const formatGreeting = (date: Date) => {
 
     return greeting;
 }
-export { formatGreeting, formatTime };
+
+const formatRoutineDay = (date: Date) => {
+    const day = date.toLocaleString("en-us", { weekday: "long" });
+    return day;
+}
+export { formatGreeting, formatRoutineDay, formatTime };
 

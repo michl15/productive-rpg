@@ -1,11 +1,13 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import { FLUSH, PAUSE, PERSIST, persistReducer, persistStore, PURGE, REGISTER, REHYDRATE } from 'redux-persist';
+import routinesReducer from './routinesReducer';
 import tasksReducer from './tasksReducer';
 
 
 const rootReducer = combineReducers({
-    tasksReducer: tasksReducer
+    tasksReducer: tasksReducer,
+    routinesReducer: routinesReducer
 });
 
 const persistConfig = {

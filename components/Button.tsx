@@ -1,4 +1,4 @@
-import { GREEN, LIGHT_BLUE, RED, YELLOW } from "@/constants/colors";
+import { GRAY, GREEN, LIGHT_BLUE, RED, YELLOW } from "@/constants/colors";
 import React from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 
@@ -8,7 +8,7 @@ type Props = {
     Icon?: React.ElementType;
     iconName?: string;
     size?: "small" | "large";
-    variant?: "success" | "error" | "warning";
+    variant?: "success" | "error" | "warning" | "secondary";
 }
 
 export default function Button({ label, onPress, Icon, iconName, size, variant }: Props) {
@@ -35,6 +35,8 @@ export default function Button({ label, onPress, Icon, iconName, size, variant }
             return RED;
         } else if (variant === "warning") {
             return YELLOW;
+        } else if (variant === "secondary") {
+            return GRAY;
         } else {
             return LIGHT_BLUE;
         }
@@ -62,8 +64,8 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderColor: LIGHT_BLUE,
         borderRadius: 10,
-        paddingHorizontal: 20,
-        paddingVertical: 15,
+        paddingHorizontal: 15,
+        paddingVertical: 10,
         margin: 10,
         flexDirection: 'row'
     },

@@ -1,9 +1,5 @@
 import { Task } from "@/constants/types";
 
-const randomId = (length: number = 6) => {
-    return Math.random().toString(36).substring(2, length + 2);
-}
-
 const getTaskById = (id: string, taskList: Task[]) => {
     for (let i in taskList) {
         if (taskList[i].id === id) {
@@ -22,5 +18,5 @@ const getTaskIndexById = (id: string, taskList: Task[]) => {
     return -1;
 }
 
-export { getTaskById, getTaskIndexById, randomId };
+export { getTaskById, getTaskIndexById };
 

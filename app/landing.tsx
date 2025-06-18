@@ -28,10 +28,5 @@ const styles = StyleSheet.create({
     },
     basicText: {
         color: '#fff'
-    },
-    button: {
-        fontSize: 20,
-        textDecorationLine: 'underline',
-        color: '#fff',
-    },
+    }
 })

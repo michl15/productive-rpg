@@ -6,4 +6,12 @@ type Task = {
     timestamp?: Date
 }
 
-export type { Task }
+type Routine = {
+    name: string,
+    id: string,
+    days: number[],
+    daily: boolean
+}
+
+export type { Routine, Task }
+

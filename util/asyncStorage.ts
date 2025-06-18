@@ -24,5 +24,9 @@ const setInAsyncStorage = async (key: string, value: any) => {
     }
 }
 
-export { getInitialTasks, setInAsyncStorage };
+const randomId = (length: number = 6) => {
+    return Math.random().toString(36).substring(2, length + 2);
+}
+
+export { getInitialTasks, randomId, setInAsyncStorage };
 

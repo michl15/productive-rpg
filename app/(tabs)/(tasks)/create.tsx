@@ -3,7 +3,7 @@ import PriorityPicker from "@/components/PriorityPicker";
 import { BACKGROUND_GRAY, LIGHT_BLUE, RED } from "@/constants/colors";
 import { Task } from "@/constants/types";
 import { addTask } from "@/redux/tasksReducer";
-import { randomId } from "@/util/tasksUtil";
+import { randomId } from "@/util/asyncStorage";
 import { useFocusEffect, useRouter } from "expo-router";
 import { useCallback, useRef, useState } from "react";
 import { StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
@@ -29,8 +29,9 @@ export default function Create({ task }: Props) {
     }
 
     const onSubmit = async () => {
-        if (!taskName) {
+        if (!taskName.trim()) {
             setValidInput(false);
+            setTaskName("");
         } else {
             const newTask = {
                 name: taskName,
@@ -96,7 +97,7 @@ export default function Create({ task }: Props) {
             />
 
             <View style={styles.buttonsContainer}>
-                <Button label="Cancel" onPress={onCancel} />
+                <Button label="Cancel" onPress={onCancel} variant="secondary" />
                 <Button label={addButtonContent()} onPress={onSubmit} />
             </View>
         </View>
@@ -124,7 +125,7 @@ const styles = StyleSheet.create({
     labelText: {
         color: '#fff',
         marginRight: "auto",
-        fontSize: 16
+        fontSize: 20
     },
     input: {
         width: "90%",
