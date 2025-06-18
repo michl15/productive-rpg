@@ -16,7 +16,7 @@ export default function Index() {
   const router = useRouter();
 
   const onRoutinesPress = () => {
-    router.push("/(tabs)/routines")
+    router.push("/(tabs)/(routines)")
   }
 
   const onTasksPress = () => {

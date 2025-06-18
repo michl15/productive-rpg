@@ -27,10 +27,5 @@ const styles = StyleSheet.create({
         fontSize: 30,
         color: '#fff',
         paddingBottom: 20
-    },
-    button: {
-        fontSize: 20,
-        textDecorationLine: 'underline',
-        color: '#fff',
-    },
+    }
 });

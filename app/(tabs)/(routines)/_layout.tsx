@@ -1,7 +1,7 @@
 import { BACKGROUND_GRAY } from "@/constants/colors";
 import { Stack } from "expo-router";
 
-export default function TasksLayout() {
+export default function RoutinesLayout() {
     return (
         <Stack
             screenOptions={{
@@ -11,10 +11,7 @@ export default function TasksLayout() {
                 }
             }}
         >
-            <Stack.Screen name="index" options={{
-                animation: "fade_from_bottom"
-            }} />
-            <Stack.Screen name="create" />
+            <Stack.Screen name="index" />
         </Stack>
     )
 }

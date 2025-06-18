@@ -29,17 +29,20 @@ export default function StepTracker() {
     }, []);
 
     return (
-        isPedometerAvailable ? <View style={styles.container}>
+        <View style={styles.container}>
             <View style={styles.innerContainer}>
-                <Text style={styles.basicText}>Today&apos;s Steps</Text>
-                <Text style={styles.stepsText}>
-                    {pastStepCount}
-                </Text>
+                {isPedometerAvailable ?
+                    <View>
+                        <Text style={styles.basicText}>Today&apos;s Steps</Text>
+                        <Text style={styles.stepsText}>
+                            {pastStepCount}
+                        </Text>
+                    </View> :
+                    <Text style={styles.basicText}>
+                        To see your steps, please go to <Text style={styles.boldText}>{"Settings > Apps > Productive RPG"}</Text> and enable &quot;Motion & Fitness&quot;
+                    </Text>
+                }
             </View>
-        </View> : <View>
-            <Text style={styles.basicText}>
-                To see your steps, please go to {"Settings > Apps > Productive RPG"} and enable &quot;Motion & Fitness&quot;
-            </Text>
         </View>
     );
 }
@@ -65,11 +68,17 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     basicText: {
-        color: '#fff'
+        color: '#fff',
+        alignItems: 'center',
+        textAlign: 'center'
+    },
+    boldText: {
+        fontWeight: "bold"
     },
     stepsText: {
         color: "#fff",
         fontSize: 50,
+        textAlign: 'center'
     }
 
 });
