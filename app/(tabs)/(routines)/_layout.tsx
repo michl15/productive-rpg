@@ -11,7 +11,10 @@ export default function RoutinesLayout() {
                 }
             }}
         >
-            <Stack.Screen name="index" />
+            <Stack.Screen name="index" options={{
+                animation: "fade_from_bottom"
+            }} />
+            <Stack.Screen name="create" />
         </Stack>
     )
 }
