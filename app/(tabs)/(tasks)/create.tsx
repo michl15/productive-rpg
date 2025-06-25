@@ -1,6 +1,7 @@
 import Button from "@/components/Button";
 import PriorityPicker from "@/components/PriorityPicker";
-import { BACKGROUND_GRAY, LIGHT_BLUE, RED } from "@/constants/colors";
+import { LIGHT_BLUE, RED } from "@/constants/colors";
+import { coreStyles } from "@/constants/styles";
 import { Task } from "@/constants/types";
 import { addTask } from "@/redux/tasksReducer";
 import { randomId } from "@/util/asyncStorage";
@@ -58,9 +59,9 @@ export default function Create({ task }: Props) {
 
     return (
         <View
-            style={styles.container}
+            style={coreStyles.container}
         >
-            <Text style={styles.titleText}>Create a task</Text>
+            <Text style={coreStyles.titleText}>Create a task</Text>
             <TouchableOpacity style={styles.labelContainer}>
                 <Text style={styles.labelText}>Name</Text>
             </TouchableOpacity>
@@ -105,20 +106,6 @@ export default function Create({ task }: Props) {
 }
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: BACKGROUND_GRAY,
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    titleText: {
-        fontSize: 30,
-        color: '#fff',
-        paddingBottom: 20
-    },
-    basicText: {
-        color: '#fff'
-    },
     labelContainer: {
         justifyContent: "flex-end"
     },

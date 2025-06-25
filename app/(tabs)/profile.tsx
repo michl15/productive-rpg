@@ -1,29 +1,12 @@
-import { BACKGROUND_GRAY } from "@/constants/colors";
-import { StyleSheet, Text, View } from "react-native";
+import { coreStyles } from "@/constants/styles";
+import { Text, View } from "react-native";
 
 export default function Profile() {
     return (
         <View
-            style={styles.container}
+            style={coreStyles.container}
         >
-            <Text style={styles.titleText}>Profile</Text>
+            <Text style={coreStyles.titleText}>Profile</Text>
         </View>
     );
 }
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: BACKGROUND_GRAY,
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    titleText: {
-        fontSize: 30,
-        color: '#fff',
-        paddingBottom: 20
-    },
-    basicText: {
-        color: '#fff'
-    }
-})

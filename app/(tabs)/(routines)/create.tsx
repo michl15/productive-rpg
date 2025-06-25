@@ -1,8 +1,9 @@
 import Button from "@/components/Button";
 import CheckBox from "@/components/CheckBox";
 import DayPicker from "@/components/DayPicker";
-import { BACKGROUND_GRAY, LIGHT_BLUE, RED } from "@/constants/colors";
+import { LIGHT_BLUE, RED } from "@/constants/colors";
 import { pickerOptions } from "@/constants/constants";
+import { coreStyles } from "@/constants/styles";
 import { Routine } from "@/constants/types";
 import { addRoutine } from "@/redux/routinesReducer";
 import { randomId } from "@/util/asyncStorage";
@@ -75,8 +76,8 @@ export default function CreateRoutine({ routine }: Props) {
     }
 
     return (
-        <View style={styles.container}>
-            <Text style={styles.titleText}>
+        <View style={coreStyles.container}>
+            <Text style={coreStyles.titleText}>
                 Create a Routine
             </Text>
             <TouchableOpacity style={styles.labelContainer}>
@@ -121,20 +122,6 @@ export default function CreateRoutine({ routine }: Props) {
 }
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: BACKGROUND_GRAY,
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    titleText: {
-        fontSize: 30,
-        color: '#fff',
-        paddingBottom: 20
-    },
-    basicText: {
-        color: '#fff'
-    },
     buttonsContainer: {
         flexDirection: "row",
         justifyContent: 'center',

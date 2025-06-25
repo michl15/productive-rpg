@@ -1,7 +1,7 @@
 import Button from "@/components/Button";
 import HomeScreenButton from "@/components/HomeScreenButton";
 import StepTracker from "@/components/StepTracker";
-import { BACKGROUND_GRAY } from "@/constants/colors";
+import { coreStyles } from "@/constants/styles";
 import { formatGreeting, formatTime } from "@/util/timeUtil";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useRouter } from "expo-router";
@@ -45,9 +45,9 @@ export default function Index() {
 
   return (
     <View
-      style={styles.container}
+      style={coreStyles.container}
     >
-      <Text style={styles.titleText}>{greeting}</Text>
+      <Text style={coreStyles.titleText}>{greeting}</Text>
       <Text style={styles.timeText}>{currTime} Let&apos;s get going!</Text>
       <StepTracker />
       <HomeScreenButton label="Today's Routines" onPress={onRoutinesPress} />
@@ -58,24 +58,9 @@ export default function Index() {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: BACKGROUND_GRAY,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  titleText: {
-    fontSize: 35,
-    color: '#fff',
-    padding: 20,
-    paddingTop: 0
-  },
   timeText: {
     fontSize: 18,
     padding: 10,
     color: "#fff"
-  },
-  basicText: {
-    color: '#fff'
   }
 })
