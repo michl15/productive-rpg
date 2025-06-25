@@ -1,6 +1,6 @@
 import Button from "@/components/Button";
 import CompletedTask from "@/components/CompletedTask";
-import { BACKGROUND_GRAY } from "@/constants/colors";
+import { coreStyles } from "@/constants/styles";
 import { RootState } from "@/redux/store";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { useRouter } from "expo-router";
@@ -28,9 +28,9 @@ export default function Completed() {
 
     return (
         <View
-            style={styles.container}
+            style={coreStyles.container}
         >
-            <Text style={styles.titleText}>Completed</Text>
+            <Text style={coreStyles.titleText}>Completed</Text>
             {getTaskList()}
             <Button
                 label="Back to tasks"
@@ -44,18 +44,6 @@ export default function Completed() {
 }
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: BACKGROUND_GRAY,
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    titleText: {
-        paddingTop: 70,
-        fontSize: 30,
-        color: '#fff',
-        paddingBottom: 20
-    },
     taskListContainer: {
         width: "100%"
     },

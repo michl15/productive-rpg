@@ -2,6 +2,7 @@ import Accordion from "@/components/Accordion";
 import Button from "@/components/Button";
 import RoutineList from "@/components/RoutineList";
 import { BACKGROUND_GRAY } from "@/constants/colors";
+import { coreStyles } from "@/constants/styles";
 import { Routine } from "@/constants/types";
 import { RootState } from "@/redux/store";
 import { getRoutinesByDay } from "@/util/routinesUtil";
@@ -32,7 +33,7 @@ export default function Routines() {
             <ScrollView
                 contentContainerStyle={styles.scrollView}
             >
-                <Text style={styles.titleText}>Routines</Text>
+                <Text style={coreStyles.titleText}>Routines</Text>
                 <Button
                     label="Add a Routine"
                     onPress={onCreatePress}
@@ -88,11 +89,6 @@ const styles = StyleSheet.create({
         justifyContent: "flex-start",
         alignItems: 'center',
         paddingTop: 70
-    },
-    titleText: {
-        fontSize: 30,
-        color: '#fff',
-        paddingBottom: 10
     },
     subtitleText: {
         fontSize: 20,

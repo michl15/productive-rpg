@@ -1,6 +1,6 @@
 import Button from "@/components/Button";
 import TaskCard from "@/components/TaskCard";
-import { BACKGROUND_GRAY } from "@/constants/colors";
+import { coreStyles } from "@/constants/styles";
 import { RootState } from "@/redux/store";
 import { completeTasks } from "@/redux/tasksReducer";
 import Ionicons from "@expo/vector-icons/Ionicons";
@@ -54,9 +54,9 @@ export default function Tasks() {
 
     return (
         <View
-            style={styles.container}
+            style={coreStyles.container}
         >
-            <Text style={styles.titleText}>Tasks</Text>
+            <Text style={coreStyles.titleText}>Tasks</Text>
             <View style={styles.buttonContainer}>
                 <Button
                     label="New Task"
@@ -82,18 +82,6 @@ export default function Tasks() {
 }
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: BACKGROUND_GRAY,
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    titleText: {
-        paddingTop: 70,
-        fontSize: 30,
-        color: '#fff',
-        paddingBottom: 20
-    },
     taskListContainer: {
         width: "100%"
     },
