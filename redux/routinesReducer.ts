@@ -17,15 +17,19 @@ export const routinesSlice = createSlice({
     initialState,
     reducers: {
         addRoutine: (state, action: PayloadAction<Routine>) => {
-            state.routines.push(action.payload);
-        },
-        updateRoutine: (state, action: PayloadAction<Routine>) => {
             const { index } = getRoutineById(state.routines, action.payload.id);
-            state.routines[index] = action.payload;
+            if (index >= 0) {
+                state.routines[index] = action.payload
+            } else {
+                state.routines.push(action.payload);
+            }
+        },
+        deleteRoutine: (state, action: PayloadAction<Routine>) => {
+            state.routines = state.routines.filter((r) => r.id !== action.payload.id);
         }
     },
 })
 
-export const { addRoutine } = routinesSlice.actions;
+export const { addRoutine, deleteRoutine } = routinesSlice.actions;
 
 export default routinesSlice.reducer;

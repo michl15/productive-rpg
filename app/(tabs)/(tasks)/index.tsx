@@ -56,7 +56,7 @@ export default function Tasks() {
         <View
             style={coreStyles.container}
         >
-            <Text style={coreStyles.titleText}>Tasks</Text>
+            <Text style={styles.titleText}>Tasks</Text>
             <View style={styles.buttonContainer}>
                 <Button
                     label="New Task"
@@ -82,6 +82,12 @@ export default function Tasks() {
 }
 
 const styles = StyleSheet.create({
+    titleText: {
+        paddingTop: 70,
+        fontSize: 30,
+        color: '#fff',
+        paddingBottom: 20
+    },
     taskListContainer: {
         width: "100%"
     },

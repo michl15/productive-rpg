@@ -1,5 +1,6 @@
 import { LIGHT_BLUE } from "@/constants/colors"
 import { Routine } from "@/constants/types"
+import { useRouter } from "expo-router"
 import { Pressable, StyleSheet, Text, View } from "react-native"
 
 type Props = {
@@ -8,8 +9,13 @@ type Props = {
 }
 
 export default function RoutineCard({ routine, index }: Props) {
+    const router = useRouter();
+
+    const onLongPress = () => {
+        router.replace(`/(tabs)/(routines)/edit/${routine.id}`)
+    }
     return (
-        <Pressable style={index === 0 ? styles.firstContainer : styles.container}>
+        <Pressable style={index === 0 ? styles.firstContainer : styles.container} onLongPress={onLongPress}>
             <View>
                 <Text style={styles.basicText}>{routine.name}</Text>
             </View>

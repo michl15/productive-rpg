@@ -1,32 +1,35 @@
 import Button from "@/components/Button";
 import CheckBox from "@/components/CheckBox";
+import ConfirmationModal from "@/components/ConfirmationModal";
 import DayPicker from "@/components/DayPicker";
 import { LIGHT_BLUE, RED } from "@/constants/colors";
 import { pickerOptions } from "@/constants/constants";
 import { coreStyles } from "@/constants/styles";
 import { Routine } from "@/constants/types";
-import { addRoutine } from "@/redux/routinesReducer";
+import { addRoutine, deleteRoutine } from "@/redux/routinesReducer";
 import { randomId } from "@/util/asyncStorage";
+import Ionicons from "@expo/vector-icons/Ionicons";
 import { useRouter } from "expo-router";
 import { useState } from "react";
 import { Pressable, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 import { useDispatch } from "react-redux";
 
 type Props = {
-    routine?: Routine;
+    routine?: Routine | null;
 }
 
 export default function CreateRoutine({ routine }: Props) {
-    const [routineName, setRoutineName] = useState("");
+    const [routineName, setRoutineName] = useState(routine?.name || "");
     const [validInput, setValidInput] = useState(true);
     const [validRoutine, setValidRoutine] = useState(true);
-    const [selectedDays, setSelectedDays] = useState<number[]>([]);
+    const [selectedDays, setSelectedDays] = useState<number[]>(routine?.days || []);
+    const [modalVisible, setModalVisible] = useState(false);
 
     const router = useRouter();
     const dispatch = useDispatch();
 
     const onCancel = () => {
-        router.back();
+        router.replace("/(tabs)/(routines)");
     }
 
     const onDaySelect = (index: number) => {
@@ -34,8 +37,7 @@ export default function CreateRoutine({ routine }: Props) {
         if (selectedDays.includes(index)) {
             setSelectedDays(selectedDays.filter((day) => day !== index));
         } else {
-            selectedDays.push(index);
-            setSelectedDays([...selectedDays])
+            setSelectedDays([...selectedDays, index])
         }
     }
 
@@ -75,49 +77,77 @@ export default function CreateRoutine({ routine }: Props) {
         }
     }
 
+    const onPressDelete = () => {
+        setModalVisible(true);
+    }
+
+    const onDelete = () => {
+        if (routine) {
+            dispatch(deleteRoutine(routine));
+            router.replace("/(tabs)/(routines)");
+            setModalVisible(false);
+
+        }
+    }
+
     return (
-        <View style={coreStyles.container}>
-            <Text style={coreStyles.titleText}>
-                Create a Routine
-            </Text>
-            <TouchableOpacity style={styles.labelContainer}>
-                <Text style={styles.labelText}>Name</Text>
-            </TouchableOpacity>
-            <TextInput
-                value={routineName}
-                onChangeText={(text) => {
-                    setRoutineName(text);
-                    setValidInput(true);
-                }}
-                style={{
-                    ...styles.input,
-                    borderColor: validInput ? LIGHT_BLUE : RED
-                }}
-                placeholder="Enter a name for your routine"
-                maxLength={30}
-            />
-            {!validInput && <Text style={styles.invalidText}>Please enter a name for your routine</Text>}
+        <>
+            <View style={coreStyles.container}>
+                <Text style={coreStyles.titleText}>
+                    {routine ? "Update Routine" : "Create a Routine"}
+                </Text>
+                <TouchableOpacity style={styles.labelContainer}>
+                    <Text style={styles.labelText}>Name</Text>
+                </TouchableOpacity>
+                <TextInput
+                    value={routineName}
+                    onChangeText={(text) => {
+                        setRoutineName(text);
+                        setValidInput(true);
+                    }}
+                    style={{
+                        ...styles.input,
+                        borderColor: validInput ? LIGHT_BLUE : RED
+                    }}
+                    placeholder="Enter a name for your routine"
+                    maxLength={30}
+                />
+                {!validInput && <Text style={styles.invalidText}>Please enter a name for your routine</Text>}
 
-            <TouchableOpacity style={styles.labelContainer}>
-                <Text style={styles.labelText}>Schedule</Text>
-            </TouchableOpacity>
-            <View style={{ marginBottom: 10 }}>
-                <DayPicker onDaySelect={onDaySelect} highlighted={selectedDays} options={pickerOptions} valid={validRoutine} />
-            </View>
-            {!validRoutine && <Text style={styles.invalidText}>Please choose at least one day to repeat</Text>}
-
-            <Pressable onPress={onSelectAll}>
-                <View style={styles.buttonsContainer}>
-                    <CheckBox onCheck={onSelectAll} value={selectedDays.length === 7} />
-                    <Text style={styles.dailyText}>Repeat Daily</Text>
+                <TouchableOpacity style={styles.labelContainer}>
+                    <Text style={styles.labelText}>Schedule</Text>
+                </TouchableOpacity>
+                <View style={{ marginBottom: 10 }}>
+                    <DayPicker onDaySelect={onDaySelect} highlighted={selectedDays} options={pickerOptions} valid={validRoutine} />
                 </View>
-            </Pressable>
+                {!validRoutine && <Text style={styles.invalidText}>Please choose at least one day to repeat</Text>}
 
-            <View style={styles.buttonsContainer}>
-                <Button label="Cancel" onPress={onCancel} variant="secondary" />
-                <Button label="Create" onPress={onSubmit} />
+                <Pressable onPress={onSelectAll}>
+                    <View style={styles.buttonsContainer}>
+                        <CheckBox onCheck={onSelectAll} value={selectedDays.length === 7} />
+                        <Text style={styles.dailyText}>Repeat Daily</Text>
+                    </View>
+                </Pressable>
+
+                <View style={styles.buttonsContainer}>
+                    <Button label="Cancel" onPress={onCancel} variant="secondary" />
+                    <Button label={routine ? "Update" : "Create"} onPress={onSubmit} />
+                </View>
             </View>
-        </View>
+            {
+                routine && <View style={styles.deleteButtonContainer}>
+                    <Button label="Delete" onPress={onPressDelete} variant="error" Icon={Ionicons} iconName="trash" size="small" />
+                </View>
+            }
+
+            <ConfirmationModal
+                onCancel={() => setModalVisible(false)}
+                onConfirm={onDelete}
+                visible={modalVisible}
+                message="Are you sure you want to delete this routine?"
+                header="Delete Routine"
+            />
+        </>
     )
 }
 
@@ -160,5 +190,10 @@ const styles = StyleSheet.create({
     dailyText: {
         color: "#fff",
         margin: 5
+    },
+    deleteButtonContainer: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        paddingBottom: 20
     }
 })
