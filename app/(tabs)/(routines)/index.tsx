@@ -33,7 +33,7 @@ export default function Routines() {
             <ScrollView
                 contentContainerStyle={styles.scrollView}
             >
-                <Text style={coreStyles.titleText}>Routines</Text>
+                <Text style={coreStyles.titleText}>My Routines</Text>
                 <Button
                     label="Add a Routine"
                     onPress={onCreatePress}
@@ -88,7 +88,6 @@ const styles = StyleSheet.create({
         flexGrow: 1,
         justifyContent: "flex-start",
         alignItems: 'center',
-        paddingTop: 70
     },
     subtitleText: {
         fontSize: 20,

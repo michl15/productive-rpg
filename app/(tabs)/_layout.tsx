@@ -1,4 +1,5 @@
-import { BACKGROUND_GRAY, LIGHT_BLUE } from '@/constants/colors';
+import HeaderSteps from '@/components/HeaderSteps';
+import { BACKGROUND_GRAY, HEADER_GRAY, LIGHT_BLUE } from '@/constants/colors';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { Tabs } from 'expo-router';
 
@@ -10,7 +11,13 @@ export default function TabLayout() {
                 tabBarStyle: {
                     backgroundColor: BACKGROUND_GRAY,
                 },
-                headerShown: false
+                headerStyle: {
+                    backgroundColor: HEADER_GRAY,
+                    height: 110
+                },
+                headerTintColor: "#fff",
+                headerTitle: "",
+                headerRight: () => <HeaderSteps />
             }}
             initialRouteName='index'
         >
