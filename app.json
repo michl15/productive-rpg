@@ -9,7 +9,11 @@
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.mich15.productiverpg",
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false
+      }
     },
     "android": {
       "adaptiveIcon": {
@@ -29,6 +33,13 @@
     "experiments": {
       "typedRoutes": true
     },
-    "backgroundColor": "#25292e"
+    "backgroundColor": "#25292e",
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "cd6537a1-4bb1-44ec-a44a-f054876865cb"
+      }
+    },
+    "owner": "mich15"
   }
 }

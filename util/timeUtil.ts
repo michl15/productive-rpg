@@ -24,5 +24,10 @@ const formatRoutineDay = (date: Date) => {
     const day = date.toLocaleString("en-us", { weekday: "long" });
     return day;
 }
-export { formatGreeting, formatRoutineDay, formatTime };
+
+const checkDate = (date1: Date, date2: Date) => {
+    return date1.setHours(0, 0, 0, 0) === date2.setHours(0, 0, 0, 0);
+}
+
+export { checkDate, formatGreeting, formatRoutineDay, formatTime };
 

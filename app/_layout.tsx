@@ -8,10 +8,10 @@ export default function RootLayout() {
   return (
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
-        <Stack initialRouteName="(tabs)" screenOptions={{
+        <Stack screenOptions={{
           contentStyle: {
             backgroundColor: BACKGROUND_GRAY
-          }
+          },
         }}>
           <Stack.Screen name="landing" options={{ headerShown: false }} />
           <Stack.Screen name="(tabs)" options={{ headerShown: false }} />

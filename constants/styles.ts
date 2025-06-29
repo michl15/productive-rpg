@@ -11,7 +11,7 @@ const coreStyles = StyleSheet.create({
     titleText: {
         fontSize: 30,
         color: '#fff',
-        paddingBottom: 20
+        padding: 10
     },
     basicText: {
         color: '#fff'
